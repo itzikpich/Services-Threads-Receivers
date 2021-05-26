@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edittext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startservice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startService"
+        android:text="start service"
+        app:layout_constraintTop_toBottomOf="@id/edittext"
+        app:layout_constraintStart_toStartOf="@id/edittext"
+        app:layout_constraintEnd_toEndOf="@id/edittext"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/stopservice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="stopService"
+        android:text="stop service"
+        app:layout_constraintTop_toBottomOf="@id/startservice"
+        app:layout_constraintStart_toStartOf="@id/edittext"
+        app:layout_constraintEnd_toEndOf="@id/edittext"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startJobService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startJobIntentService"
+        android:text="start job intent service"
+        app:layout_constraintTop_toBottomOf="@id/stopservice"
+        app:layout_constraintStart_toStartOf="@id/edittext"
+        app:layout_constraintEnd_toEndOf="@id/edittext"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startjob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startJobService"
+        android:text="schedule job"
+        app:layout_constraintTop_toBottomOf="@id/startJobService"
+        app:layout_constraintStart_toStartOf="@id/edittext"
+        app:layout_constraintEnd_toEndOf="@id/edittext"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/canceljob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="stopJobService"
+        android:text="cancel job"
+        app:layout_constraintTop_toBottomOf="@id/startjob"
+        app:layout_constraintStart_toStartOf="@id/edittext"
+        app:layout_constraintEnd_toEndOf="@id/edittext"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/navigate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="navigate"
+        android:text="navigate"
+        app:layout_constraintTop_toBottomOf="@id/canceljob"
+        app:layout_constraintStart_toStartOf="@id/edittext"
+        app:layout_constraintEnd_toEndOf="@id/edittext"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
