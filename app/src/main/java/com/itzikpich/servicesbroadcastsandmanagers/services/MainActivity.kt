@@ -10,8 +10,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.work.*
 import com.itzikpich.servicesbroadcastsandmanagers.R
 import com.itzikpich.servicesbroadcastsandmanagers.threads.SecondActivity
+import java.util.concurrent.TimeUnit
 
 private const val TAG = "MainActivity"
 
@@ -104,6 +106,51 @@ class MainActivity : AppCompatActivity() {
         jobScheduler.cancel(JOB_SERVICE_ID)
         Log.d(TAG, "stopJobService: job canceled")
     }
+
+    /**
+     * Worker defines the unit of work, meaning what is the work to do
+     * a WorkRequest (and its subclasses) define how and when the Worker should run
+     * */
+
+    fun startWorkManager(view: View) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresCharging(false)
+            .setRequiresStorageNotLow(false)
+            .setRequiresBatteryNotLow(false)
+            .setRequiresDeviceIdle(false)
+            .build()
+        /** create workRequest */
+        val mainWorkRequest: WorkRequest =
+//            OneTimeWorkRequestBuilder<MainWorker>()
+            PeriodicWorkRequestBuilder<MainWorker>(15, TimeUnit.MINUTES)
+//                .setConstraints(constraints)
+//                .setInitialDelay(10, TimeUnit.MINUTES)
+                .addTag("myWork")
+                .setInputData(workDataOf(
+                    "IMAGE_URI" to "http://..."
+                ))
+            .build()
+        val workManager = WorkManager.getInstance(this)
+//        workManager
+//            .beginUniqueWork("uniqueWorkName", ExistingWorkPolicy.REPLACE, OneTimeWorkRequest.from(MainWorker::class.java))
+//            .enqueue()
+        workManager.enqueue(mainWorkRequest)
+//        WorkManager.getInstance(this).enqueue(mainWorkRequest)
+        Log.d(TAG, "startWorkManager: $workManager")
+    }
+
+    fun stopWorkManager(view: View) {
+        val workManager = WorkManager.getInstance(this)
+        Log.d(TAG, "stopWorkManager: $workManager")
+        workManager
+            .cancelAllWorkByTag("myWork")
+//            .cancelAllWork()
+//            .cancelWorkById()
+//            .cancelUniqueWork("uniqueWorkName")
+        Log.d(TAG, "workManager info: ${workManager.getWorkInfosByTag("myWork")}")
+    }
+
     fun navigate(view: View) {
         startActivity(Intent(this, SecondActivity::class.java))
     }
